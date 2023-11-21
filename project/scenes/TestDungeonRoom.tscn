@@ -3,7 +3,7 @@
 [ext_resource type="TileSet" uid="uid://cx53qx8i4jmt0" path="res://resources/nethack_16x16_tileset_background.tres" id="1_42rvv"]
 [ext_resource type="PackedScene" uid="uid://52vm4ur2tftq" path="res://scenes/Player.tscn" id="2_6wslj"]
 
-[node name="TestDungeonRoom" type="Node"]
+[node name="TestDungeonRoom" type="Node2D"]
 
 [node name="TestDungeonRoomForeground" type="TileMap" parent="."]
 tile_set = ExtResource("1_42rvv")
