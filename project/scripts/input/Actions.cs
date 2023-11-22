@@ -3,11 +3,23 @@ using Godot;
 
 namespace crawler.scripts.input;
 
+/// <summary>
+/// Defines the set of possible actions an entity can take.
+/// </summary>
 public class Actions
 {
     public record ActionType
     {
+        /// <summary>
+        /// The name of this action in the InputMap.
+        /// </summary>
         public StringName Name { get; init; }
+        
+        /// <summary>
+        /// (This should be on a subclass)
+        /// <br/>
+        /// The direction to move the entity in, if applicable.
+        /// </summary>
         public Vector2 Direction { get; init; }
     }
     
