@@ -1,5 +1,6 @@
 ﻿using crawler.scripts.nodes;
 using Godot;
+using Godot.Collections;
 
 namespace crawler.scripts.engine.zones;
 
@@ -8,12 +9,14 @@ public class ActiveZone
     public readonly Zone Source;
     public readonly TileMap Map;
     public readonly Vector2 StartPosition;
+    public readonly Dictionary<Vector2, Node2D> Nodes;
 
-    private ActiveZone(Zone source, TileMap map, Vector2 startPosition)
+    private ActiveZone(Zone source, TileMap map, Vector2 startPosition, Dictionary<Vector2, Node2D> nodes)
     {
-        this.Source = source;
-        this.Map = map;
-        this.StartPosition = startPosition;
+        Source = source;
+        Map = map;
+        StartPosition = startPosition;
+        Nodes = nodes;
     }
 
     public static ActiveZone MakeActive(Zone source)
@@ -26,6 +29,17 @@ public class ActiveZone
             position = startMarker.Position;
         }
 
-        return new ActiveZone(source, map, position);
+        var dict = new Dictionary<Vector2, Node2D>();
+        foreach (var n in map.GetChildren())
+        {
+            if (n is not Node2D)
+            {
+                continue;
+            }
+            var asNode2D = (Node2D)n;
+            dict.Add(asNode2D.Position, asNode2D);
+        }
+
+        return new ActiveZone(source, map, position, dict);
     }
 }

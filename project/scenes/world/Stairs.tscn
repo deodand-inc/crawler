@@ -5,15 +5,17 @@
 
 [node name="Stairs" type="Node2D"]
 script = ExtResource("1_nclu1")
+SceneName = &""
 
 [node name="StairsUp" type="Sprite2D" parent="."]
-visible = false
+position = Vector2(8, 8)
 texture = ExtResource("2_0k187")
 region_enabled = true
 region_rect = Rect2(528, 336, 16, 16)
 
 [node name="StairsDown" type="Sprite2D" parent="."]
 visible = false
+position = Vector2(8, 8)
 texture = ExtResource("2_0k187")
 region_enabled = true
 region_rect = Rect2(544, 336, 16, 16)

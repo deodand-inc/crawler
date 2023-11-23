@@ -1,46 +1,56 @@
-using System.Collections.Generic;
-
 namespace crawler.scripts.nodes.world;
 using Godot;
 using System;
-using crawler.scripts.utils.extensions;
+using utils.extensions;
 
+[Tool]
 public partial class Stairs : Node2D
 {
-    public enum StairsDirection
+    public enum ZDirection
     {
         Up,
         Down
     }
-    
-    [Signal]
-    public delegate void HandleEnterEventHandler();
 
-    private Godot.Collections.Dictionary<StairsDirection, Sprite2D> _sprites = new();
+    private Godot.Collections.Dictionary<ZDirection, Sprite2D> _sprites = new();
     private Sprite2D _currentSprite = null;
-    private StairsDirection _direction = StairsDirection.Up;
+    private ZDirection _direction = ZDirection.Up;
     
     [Export]
-    public StairsDirection Direction
+    public ZDirection Direction
     {
         get => _direction;
         set
         {
+            _ensureSpritesLoaded();
             if (_direction != value)
             {
                 _direction = value;
+                if (_currentSprite != null)
+                {
+                    _currentSprite.Visible = false;
+                    _currentSprite.QueueRedraw();
+                }
                 _currentSprite = _sprites.GetOrThrow(value);
                 _currentSprite.Visible = true;
-                QueueRedraw();
+                _currentSprite.QueueRedraw();
             }
         }
     }
 
+    [Export] public StringName SceneName;
+
     public override void _Ready()
     {
-        _sprites.Add(StairsDirection.Up, GetNode<Sprite2D>("StairsUp"));
-        _sprites.Add(StairsDirection.Down, GetNode<Sprite2D>("StairsDown"));
-        _currentSprite = _sprites.GetOrThrow(Direction);
-        _currentSprite.Visible = true;
+        _ensureSpritesLoaded();
+    }
+
+    public void _ensureSpritesLoaded()
+    {
+        if (_sprites.Count == 0)
+        {
+            _sprites.Add(ZDirection.Up, GetNode<Sprite2D>("StairsUp"));
+            _sprites.Add(ZDirection.Down, GetNode<Sprite2D>("StairsDown"));
+        }
     }
 }

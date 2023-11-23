@@ -1,5 +1,8 @@
 using crawler.scripts.engine;
 using crawler.scripts.engine.entity;
+using crawler.scripts.engine.zones;
+using crawler.scripts.nodes.world;
+using crawler.scripts.utils.extensions;
 
 namespace crawler.scripts.nodes;
 
@@ -63,16 +66,44 @@ public partial class PlayerScene : Area2D
 		{
 			if (@event.IsActionPressed(action.Name))
 			{
+				HandleActionPressed(action);
+			}
+		}
+	}
+
+	private void HandleActionPressed(Actions.Action action)
+	{
+		switch (action)
+		{
+			case Actions.MovementAction ma:
+			{
 				try
 				{
 					MovementMutex.WaitOne();
-					_TryMove(action.Direction);
+					_TryMove(ma.Direction);
 				}
 				finally
 				{
 					MovementMutex.ReleaseMutex();
 				}
 				return;
+			}
+			case Actions.ZMovementAction za:
+			{
+				// TODO: Offset of player vs offset of stairs is inconsistent, investigate why
+				var nodes = ZoneService.Instance.CurrentZone.Nodes;
+				GD.Print(Position);
+				if (!nodes.Has(Position))
+				{
+					break;
+				}
+
+				var whatsThere = nodes.GetOrThrow(Position);
+				if (whatsThere is Stairs s && s.Direction == za.Direction)
+				{
+					ZoneService.Instance.MovePlayerToZone(s.SceneName);
+				}
+				break;
 			}
 		}
 	}

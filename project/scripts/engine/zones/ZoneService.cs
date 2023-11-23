@@ -4,6 +4,7 @@ using crawler.scripts.engine.entity;
 using crawler.scripts.nodes;
 using Godot;
 using Godot.Collections;
+using crawler.scripts.utils.extensions;
 
 namespace crawler.scripts.engine.zones;
 
@@ -52,13 +53,12 @@ public class ZoneService
 
     public Zone GetStartingZone()
     {
-        Zone val;
-        if (!_zones.TryGetValue(_startingScene, out val))
-        {
-            throw new Exception("Couldn't load starting scene " + _startingScene);
-        }
+        return _zones.GetOrThrow(_startingScene, $"Couldn't load starting scene ${_startingScene}");
+    }
 
-        return val;
+    public void MovePlayerToZone(StringName zoneName)
+    {
+        MovePlayerToZone(_zones.GetOrThrow(zoneName));
     }
 
     public void MovePlayerToZone(Zone zone)
