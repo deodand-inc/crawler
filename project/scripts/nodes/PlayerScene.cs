@@ -1,3 +1,8 @@
+using crawler.scripts.engine;
+using crawler.scripts.engine.entity;
+
+namespace crawler.scripts.nodes;
+
 using Godot;
 using System;
 using System.ComponentModel;
@@ -7,11 +12,12 @@ using crawler.scripts.utils;
 using Mutex = System.Threading.Mutex;
 using Vector2 = Godot.Vector2;
 
-public partial class Player : Area2D
+public partial class PlayerScene : Area2D
 {
 	private bool _debug = false;
 	private Rect2 _debugRect;
 	private TileMap _parent;
+	private Player _player;
 	
 	public override void _Draw()
 	{
@@ -31,6 +37,8 @@ public partial class Player : Area2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		_player = Game.Instance.Player;
+		Position = _player.Position;
 		// Get a reference to our raycast node.
 		_ray = GetNode<RayCast2D>("RayCast2D");
 		_parent = GetNode<TileMap>("..");

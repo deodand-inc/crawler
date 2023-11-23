@@ -1,13 +1,13 @@
 [gd_scene load_steps=4 format=3 uid="uid://52vm4ur2tftq"]
 
-[ext_resource type="Script" path="res://scripts/nodes/Player.cs" id="1_m0yxy"]
 [ext_resource type="Texture2D" uid="uid://bo8l2n3jnwhtp" path="res://tiles/Nethack-Tiles16x16_noalpha.png" id="1_o4ipd"]
+[ext_resource type="Script" path="res://scripts/nodes/PlayerScene.cs" id="1_uhbpr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fyij8"]
 size = Vector2(16, 16)
 
 [node name="Player" type="Area2D"]
-script = ExtResource("1_m0yxy")
+script = ExtResource("1_uhbpr")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_o4ipd")
