@@ -101,7 +101,7 @@ public partial class PlayerScene : Area2D
 				var whatsThere = nodes.GetOrThrow(Position);
 				if (whatsThere is Stairs s && s.Direction == za.Direction)
 				{
-					ZoneService.Instance.MovePlayerToZone(s.SceneName);
+					ZoneService.Instance.MovePlayerToZone(s.SceneName, Position);
 				}
 				break;
 			}

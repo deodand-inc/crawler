@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using crawler.scripts.engine.entity;
 using crawler.scripts.nodes;
+using crawler.scripts.utils;
 using Godot;
 using Godot.Collections;
 using crawler.scripts.utils.extensions;
@@ -58,10 +59,20 @@ public class ZoneService
 
     public void MovePlayerToZone(StringName zoneName)
     {
-        MovePlayerToZone(_zones.GetOrThrow(zoneName));
+        MovePlayerToZone(_zones.GetOrThrow(zoneName), Constants.VectorNotSet);
+    }
+
+    public void MovePlayerToZone(StringName zoneName, Vector2 atPosition)
+    {
+        MovePlayerToZone(_zones.GetOrThrow(zoneName), atPosition);
     }
 
     public void MovePlayerToZone(Zone zone)
+    {
+        MovePlayerToZone(zone, Constants.VectorNotSet);
+    }
+
+    public void MovePlayerToZone(Zone zone, Vector2 atPosition)
     {
         if (CurrentZone is not null)
         {
@@ -69,7 +80,14 @@ public class ZoneService
             GameView.Instance.RemoveChild(CurrentZone.Map);
         }
         CurrentZone = ActiveZone.MakeActive(zone);
-        Game.Instance.Player.Position = CurrentZone.StartPosition;
+        if (atPosition == Constants.VectorNotSet)
+        {
+            Game.Instance.Player.Position = CurrentZone.StartPosition;
+        }
+        else
+        {
+            Game.Instance.Player.Position = atPosition;
+        }
         CurrentZone.Map.AddChild(PlayerScene.Instance);
         GameView.Instance.AddChild(CurrentZone.Map);
     }
