@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://clv76cmkj2d4l"]
+
+[ext_resource type="Script" path="res://scripts/nodes/world/Stairs.cs" id="1_nclu1"]
+[ext_resource type="Texture2D" uid="uid://bl6nny8l3vip8" path="res://tiles/Nethack-Tiles16x16.png" id="2_0k187"]
+
+[node name="Stairs" type="Node2D"]
+script = ExtResource("1_nclu1")
+
+[node name="StairsUp" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("2_0k187")
+region_enabled = true
+region_rect = Rect2(528, 336, 16, 16)
+
+[node name="StairsDown" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("2_0k187")
+region_enabled = true
+region_rect = Rect2(544, 336, 16, 16)
