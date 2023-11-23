@@ -14,6 +14,8 @@ using Vector2 = Godot.Vector2;
 
 public partial class PlayerScene : Area2D
 {
+	public static readonly PlayerScene Instance = (PlayerScene) GD.Load<PackedScene>("res://scenes/Player.tscn").Instantiate();
+
 	private bool _debug = false;
 	private Rect2 _debugRect;
 	private TileMap _parent;
@@ -41,7 +43,11 @@ public partial class PlayerScene : Area2D
 		Position = _player.Position;
 		// Get a reference to our raycast node.
 		_ray = GetNode<RayCast2D>("RayCast2D");
-		_parent = GetNode<TileMap>("..");
+	}
+
+	public override void _ExitTree()
+	{
+		RequestReady();
 	}
 
 	// TODO ARJ: Don't think this mutex actually helps prevent the collision bug

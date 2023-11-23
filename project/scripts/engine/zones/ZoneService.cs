@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using crawler.scripts.engine.entity;
+using crawler.scripts.nodes;
 using Godot;
 using Godot.Collections;
 
@@ -10,6 +11,8 @@ public class ZoneService
 {
     private static ZoneService _instance = null;
     private readonly Godot.Collections.Dictionary<string, Zone> _zones = new(); 
+    private readonly StringName _startingScene = new("TestDungeonRoom");
+    public ActiveZone CurrentZone = null;
 
     private ZoneService()
     {
@@ -46,24 +49,6 @@ public class ZoneService
             return _instance;
         }
     }
-    
-    private readonly StringName _startingScene = new StringName("TestDungeonRoom");
-
-    private Zone _currentZone;
-
-    public Zone CurrentZone
-    {
-        get
-        {
-            if (_currentZone is null)
-            {
-                _currentZone = GetStartingZone();
-            }
-
-            return _currentZone;
-        }
-        set => _currentZone = value;
-    }
 
     public Zone GetStartingZone()
     {
@@ -76,9 +61,16 @@ public class ZoneService
         return val;
     }
 
-    public void MovePlayerToZone(Player p, Node2D zone)
+    public void MovePlayerToZone(Zone zone)
     {
-        Marker2D startMarker = (Marker2D) zone.GetNode("PlayerStart");
-        p.Position = startMarker.Position;
+        if (CurrentZone is not null)
+        {
+            CurrentZone.Map.RemoveChild(PlayerScene.Instance);
+            GameView.Instance.RemoveChild(CurrentZone.Map);
+        }
+        CurrentZone = ActiveZone.MakeActive(zone);
+        Game.Instance.Player.Position = CurrentZone.StartPosition;
+        CurrentZone.Map.AddChild(PlayerScene.Instance);
+        GameView.Instance.AddChild(CurrentZone.Map);
     }
 }

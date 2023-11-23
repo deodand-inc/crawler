@@ -30,13 +30,8 @@ public class Game
         }
     }
 
-    public void StartGame(GameView view)
+    public void StartGame()
     {
-        var sceneNode = (Node2D) _zoneService.CurrentZone.Scene.Instantiate();
-        view.AddChild(sceneNode);
-        _zoneService.MovePlayerToZone(Player, sceneNode);
-        // TODO ARJ: not right to have to load the player scene here. This should be singleton.
-        var player = GD.Load<PackedScene>("res://scenes/Player.tscn");
-        sceneNode.AddChild(player.Instantiate());
+        _zoneService.MovePlayerToZone(_zoneService.GetStartingZone());
     }
 }
