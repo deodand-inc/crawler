@@ -1,0 +1,8 @@
+# Normalize EOL for all files that Git considers text files.
+* text=auto eol=lf
+# Mark Godot-specific files as generated so they don't appear in diffs.
+*.godot linguist-generated
+*.tscn linguist-generated
+*.res linguist-generated
+*.tres linguist-generated
+*.import linguist-generated
