@@ -90,7 +90,6 @@ public partial class PlayerScene : Area2D
 			}
 			case Actions.ZMovementAction za:
 			{
-				// TODO: Offset of player vs offset of stairs is inconsistent, investigate why
 				var nodes = ZoneService.Instance.CurrentZone.Nodes;
 				GD.Print(Position);
 				if (!nodes.Has(Position))
