@@ -1,3 +1,11 @@
+using crawler.scripts.engine;
+using crawler.scripts.engine.entity;
+using crawler.scripts.engine.zones;
+using crawler.scripts.nodes.world;
+using crawler.scripts.utils.extensions;
+
+namespace crawler.scripts.nodes;
+
 using Godot;
 using System;
 using System.ComponentModel;
@@ -7,11 +15,14 @@ using crawler.scripts.utils;
 using Mutex = System.Threading.Mutex;
 using Vector2 = Godot.Vector2;
 
-public partial class Player : Area2D
+public partial class PlayerScene : Area2D
 {
+	public static readonly PlayerScene Instance = (PlayerScene) GD.Load<PackedScene>("res://scenes/Player.tscn").Instantiate();
+
 	private bool _debug = false;
 	private Rect2 _debugRect;
 	private TileMap _parent;
+	private Player _player;
 	
 	public override void _Draw()
 	{
@@ -31,9 +42,15 @@ public partial class Player : Area2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		_player = Game.Instance.Player;
+		Position = _player.Position;
 		// Get a reference to our raycast node.
 		_ray = GetNode<RayCast2D>("RayCast2D");
-		_parent = GetNode<TileMap>("..");
+	}
+
+	public override void _ExitTree()
+	{
+		RequestReady();
 	}
 
 	// TODO ARJ: Don't think this mutex actually helps prevent the collision bug
@@ -49,16 +66,43 @@ public partial class Player : Area2D
 		{
 			if (@event.IsActionPressed(action.Name))
 			{
+				HandleActionPressed(action);
+			}
+		}
+	}
+
+	private void HandleActionPressed(Actions.Action action)
+	{
+		switch (action)
+		{
+			case Actions.MovementAction ma:
+			{
 				try
 				{
 					MovementMutex.WaitOne();
-					_TryMove(action.Direction);
+					_TryMove(ma.Direction);
 				}
 				finally
 				{
 					MovementMutex.ReleaseMutex();
 				}
 				return;
+			}
+			case Actions.ZMovementAction za:
+			{
+				var nodes = ZoneService.Instance.CurrentZone.Nodes;
+				GD.Print(Position);
+				if (!nodes.Has(Position))
+				{
+					break;
+				}
+
+				var whatsThere = nodes.GetOrThrow(Position);
+				if (whatsThere is Stairs s && s.Direction == za.Direction)
+				{
+					ZoneService.Instance.MovePlayerToZone(s.SceneName, Position);
+				}
+				break;
 			}
 		}
 	}
