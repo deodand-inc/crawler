@@ -13,7 +13,7 @@ UniqueName = &"StairsUp"
 [sub_resource type="Resource" id="Resource_r5jji"]
 script = ExtResource("3_gj5ge")
 ZoneName = &"AdjoiningRoom"
-UniqueName = &"AdjoiningPortalSpawn"
+UniqueName = &"EastPortalSpawn"
 
 [node name="TestDungeonRoom" type="TileMap"]
 tile_set = ExtResource("1_u5lgl")
@@ -37,10 +37,10 @@ position = Vector2(64, 48)
 Direction = 1
 Target = SubResource("Resource_8k4cr")
 
-[node name="AdjoiningPortal" parent="." instance=ExtResource("4_hv07a")]
+[node name="WestPortal" parent="." instance=ExtResource("4_hv07a")]
 position = Vector2(-16, 80)
 Target = SubResource("Resource_r5jji")
 
-[node name="AdjoiningPortalSpawn" type="Marker2D" parent="."]
+[node name="WestPortalSpawn" type="Marker2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(0, 80)
