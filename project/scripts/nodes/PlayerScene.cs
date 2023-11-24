@@ -1,8 +1,8 @@
+using System.Collections.Generic;
 using crawler.scripts.engine;
 using crawler.scripts.engine.entity;
 using crawler.scripts.engine.zones;
 using crawler.scripts.nodes.world;
-using crawler.scripts.utils.extensions;
 
 namespace crawler.scripts.nodes;
 
@@ -90,17 +90,17 @@ public partial class PlayerScene : Area2D
 			}
 			case Actions.ZMovementAction za:
 			{
-				var nodes = ZoneService.Instance.CurrentZone.Nodes;
+				var nodes = ZoneService.Instance.CurrentZone.NodesByPosition;
 				GD.Print(Position);
-				if (!nodes.Has(Position))
+				if (!nodes.ContainsKey(Position))
 				{
 					break;
 				}
 
-				var whatsThere = nodes.GetOrThrow(Position);
+				var whatsThere = nodes[Position];
 				if (whatsThere is Stairs s && s.Direction == za.Direction)
 				{
-					ZoneService.Instance.MovePlayerToZone(s.SceneName, Position);
+					ZoneService.Instance.MovePlayerToZone(s.Target);
 				}
 				break;
 			}
@@ -126,38 +126,49 @@ public partial class PlayerScene : Area2D
 		// occur between our position and the ray's target, and if they don't, 
 		// then we can move there.
 		_ray.ForceRaycastUpdate();
-		if (!_ray.IsColliding())
-		{			
-			Position = target;
-			return;
-		}
-		// At this point, you know that the entity has collided with something.
-		// Now you could extract it and take different actions depending on what it is.
-		// If in 'debug' mode (set this boolean to true and rebuild), draw a rectangle
-		// around the collided-with tile.
-		if (_debug)
+		if (_ray.IsColliding())
 		{
-			_debugRect = new Rect2(target, 16, 16);
-		}
-		var collidedWith = _ray.GetCollider();
-		switch (collidedWith)
-		{
-			// For example
-			// case Monster m:
-			// {
-			//     // Attack the monster if engaged in combat
-			//     ...
-			// }
-			case TileMap tileMap:
+			// In debug mode, draw a rectangle around the collided-with tile
+			if (_debug)
 			{
-				var mapTarget = TileMapUtils.OtherLocalToMapCoordinates(_ray.TargetPosition, _ray, tileMap);
-				var sourceId = tileMap.GetCellSourceId(Constants.ForegroundLayer, mapTarget);
-				if (sourceId != -1)
-				{
-					GD.Print(mapTarget, ", ", sourceId);
-				}
-				break;
+				_debugRect = new Rect2(target, 16, 16);
+			}
+
+			// Apply any events related to this collision; 
+			// if this function returns false, it means the character should not
+			// move to this position
+			if (!CheckCollision(_ray.GetCollider()))
+			{
+				return;
 			}
 		}
+		Position = target;
+	}
+
+	/// <summary>
+	/// Run any events on collision.
+	/// </summary>
+	/// <returns>whether player should be translated to this tile's position</returns>
+	private bool CheckCollision(GodotObject collidedWith)
+	{
+		switch (collidedWith)
+		{
+			case Portal p:
+			{
+				if (p.IsWarp)
+				{
+					ZoneService.Instance.MovePlayerToZone(p.Target);
+					return false;
+				}
+				return true;
+			}
+			case TileMap:
+			{
+				// Bumped into a wall
+				return false;
+			}
+		}
+
+		return true;
 	}
 }

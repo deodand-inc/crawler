@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://cp66ummjyt1e2"]
+[gd_scene load_steps=5 format=3 uid="uid://cp66ummjyt1e2"]
 
 [ext_resource type="TileSet" uid="uid://ctm52cg4gfu2e" path="res://resources/nethack_16x16_tileset.tres" id="1_2au3a"]
 [ext_resource type="PackedScene" uid="uid://clv76cmkj2d4l" path="res://scenes/world/Stairs.tscn" id="2_fjrkm"]
+[ext_resource type="Script" path="res://scripts/engine/zones/ZoneLocation.cs" id="3_47hji"]
+
+[sub_resource type="Resource" id="Resource_3rknk"]
+script = ExtResource("3_47hji")
+ZoneName = &"TestDungeonRoom"
+UniqueName = &"StairsDown"
 
 [node name="OtherRoom" type="TileMap"]
 tile_set = ExtResource("1_2au3a")
@@ -20,5 +26,6 @@ layer_1/tile_data = PackedInt32Array(393220, 1900545, 21, 458756, 1900545, 21, 4
 position = Vector2(112, 64)
 
 [node name="StairsUp" parent="." instance=ExtResource("2_fjrkm")]
-position = Vector2(64, 48)
-SceneName = &"TestDungeonRoom"
+unique_name_in_owner = true
+position = Vector2(288, 112)
+Target = SubResource("Resource_3rknk")
