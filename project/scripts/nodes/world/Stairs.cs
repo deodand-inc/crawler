@@ -45,7 +45,6 @@ public partial class Stairs : Portal
 
     public override void _Ready()
     {
-        base._Ready();
         _ensureSpritesLoaded();
     }
 

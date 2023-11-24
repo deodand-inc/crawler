@@ -11,14 +11,14 @@ public class ActiveZone
     public readonly Zone Source;
     public readonly TileMap Map;
     public readonly Vector2 StartPosition;
-    public readonly Dictionary<Vector2, Node2D> ByPosition;
+    public readonly Dictionary<Vector2, Node2D> NodesByPosition;
 
-    private ActiveZone(Zone source, TileMap map, Vector2 startPosition, Dictionary<Vector2, Node2D> byPosition)
+    private ActiveZone(Zone source, TileMap map, Vector2 startPosition, Dictionary<Vector2, Node2D> nodesByPosition)
     {
         Source = source;
         Map = map;
         StartPosition = startPosition;
-        ByPosition = byPosition;
+        NodesByPosition = nodesByPosition;
     }
 
     public static ActiveZone MakeActive(Zone source)
@@ -31,16 +31,15 @@ public class ActiveZone
             position = startMarker.Position;
         }
 
-        var byCoordinates = new Dictionary<Vector2, Node2D>();
-        var byId = new Dictionary<Guid, Node2D>();
+        var nodesByPosition = new Dictionary<Vector2, Node2D>();
         foreach (var n in map.GetChildren())
         {
             if (n is Node2D asNode2D)
             {
-                byCoordinates.Add(asNode2D.Position, asNode2D);
+                nodesByPosition.Add(asNode2D.Position, asNode2D);
             }
         }
 
-        return new ActiveZone(source, map, position, byCoordinates);
+        return new ActiveZone(source, map, position, nodesByPosition);
     }
 }

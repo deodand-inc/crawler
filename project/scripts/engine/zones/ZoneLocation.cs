@@ -1,6 +1,5 @@
 using System;
 using System.Globalization;
-using crawler.scripts.nodes.utility;
 using Godot;
 
 namespace crawler.scripts.engine.zones;
@@ -18,6 +17,8 @@ public partial class ZoneLocation : Resource
 
     /// <summary>
     /// Unique name of the node within the zone.
+    /// You can make a node's name unique in the UI by right-clicking it
+    /// in the scene tree and clicking 'Access as unique name'.
     /// </summary>
     [Export]
     public StringName UniqueName;

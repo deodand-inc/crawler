@@ -90,7 +90,7 @@ public partial class PlayerScene : Area2D
 			}
 			case Actions.ZMovementAction za:
 			{
-				var nodes = ZoneService.Instance.CurrentZone.ByPosition;
+				var nodes = ZoneService.Instance.CurrentZone.NodesByPosition;
 				GD.Print(Position);
 				if (!nodes.ContainsKey(Position))
 				{
