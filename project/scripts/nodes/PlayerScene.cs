@@ -126,43 +126,49 @@ public partial class PlayerScene : Area2D
 		// occur between our position and the ray's target, and if they don't, 
 		// then we can move there.
 		_ray.ForceRaycastUpdate();
-		if (!_ray.IsColliding())
-		{			
-			Position = target;
-			return;
-		}
-		// At this point, you know that the entity has collided with something.
-		// Now you could extract it and take different actions depending on what it is.
-		// If in 'debug' mode (set this boolean to true and rebuild), draw a rectangle
-		// around the collided-with tile.
-		if (_debug)
+		if (_ray.IsColliding())
 		{
-			_debugRect = new Rect2(target, 16, 16);
-		}
-		var collidedWith = _ray.GetCollider();
-		switch (collidedWith)
-		{
-			// For example
-			// case Monster m:
-			// {
-			//     // Attack the monster if engaged in combat
-			//     ...
-			// }
-			case Portal:
+			// In debug mode, draw a rectangle around the collided-with tile
+			if (_debug)
 			{
-				GD.Print("Here");
+				_debugRect = new Rect2(target, 16, 16);
+			}
+
+			// Apply any events related to this collision; 
+			// if this function returns false, it means the character should not
+			// move to this position
+			if (!CheckCollision(_ray.GetCollider()))
+			{
 				return;
 			}
-			case TileMap tileMap:
+		}
+		Position = target;
+	}
+
+	/// <summary>
+	/// Run any events on collision.
+	/// </summary>
+	/// <returns>whether player should be translated to this tile's position</returns>
+	private bool CheckCollision(GodotObject collidedWith)
+	{
+		switch (collidedWith)
+		{
+			case Portal p:
 			{
-				var mapTarget = TileMapUtils.OtherLocalToMapCoordinates(_ray.TargetPosition, _ray, tileMap);
-				var sourceId = tileMap.GetCellSourceId(Constants.ForegroundLayer, mapTarget);
-				if (sourceId != -1)
+				if (p.IsWarp)
 				{
-					GD.Print(mapTarget, ", ", sourceId);
+					ZoneService.Instance.MovePlayerToZone(p.Target);
+					return false;
 				}
-				break;
+				return true;
+			}
+			case TileMap:
+			{
+				// Bumped into a wall
+				return false;
 			}
 		}
+
+		return true;
 	}
 }

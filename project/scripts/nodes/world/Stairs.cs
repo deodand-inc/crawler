@@ -38,8 +38,14 @@ public partial class Stairs : Portal
         }
     }
 
+    public Stairs()
+    {
+        IsWarp = false;
+    }
+
     public override void _Ready()
     {
+        base._Ready();
         _ensureSpritesLoaded();
     }
 

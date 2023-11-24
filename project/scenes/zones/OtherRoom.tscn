@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://clv76cmkj2d4l" path="res://scenes/world/Stairs.tscn" id="2_fjrkm"]
 [ext_resource type="Script" path="res://scripts/engine/zones/ZoneLocation.cs" id="3_47hji"]
 
-[sub_resource type="Resource" id="Resource_n7sol"]
+[sub_resource type="Resource" id="Resource_3rknk"]
 script = ExtResource("3_47hji")
 ZoneName = &"TestDungeonRoom"
 UniqueName = &"StairsDown"
@@ -28,4 +28,4 @@ position = Vector2(112, 64)
 [node name="StairsUp" parent="." instance=ExtResource("2_fjrkm")]
 unique_name_in_owner = true
 position = Vector2(288, 112)
-Target = SubResource("Resource_n7sol")
+Target = SubResource("Resource_3rknk")
