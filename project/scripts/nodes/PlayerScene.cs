@@ -1,8 +1,8 @@
+using System.Collections.Generic;
 using crawler.scripts.engine;
 using crawler.scripts.engine.entity;
 using crawler.scripts.engine.zones;
 using crawler.scripts.nodes.world;
-using crawler.scripts.utils.extensions;
 
 namespace crawler.scripts.nodes;
 
@@ -90,17 +90,17 @@ public partial class PlayerScene : Area2D
 			}
 			case Actions.ZMovementAction za:
 			{
-				var nodes = ZoneService.Instance.CurrentZone.Nodes;
+				var nodes = ZoneService.Instance.CurrentZone.ByPosition;
 				GD.Print(Position);
-				if (!nodes.Has(Position))
+				if (!nodes.ContainsKey(Position))
 				{
 					break;
 				}
 
-				var whatsThere = nodes.GetOrThrow(Position);
+				var whatsThere = nodes[Position];
 				if (whatsThere is Stairs s && s.Direction == za.Direction)
 				{
-					ZoneService.Instance.MovePlayerToZone(s.SceneName, Position);
+					ZoneService.Instance.MovePlayerToZone(s.Target);
 				}
 				break;
 			}

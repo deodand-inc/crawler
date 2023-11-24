@@ -4,7 +4,7 @@ using System;
 using utils.extensions;
 
 [Tool]
-public partial class Stairs : Node2D
+public partial class Stairs : Portal
 {
     public enum ZDirection
     {
@@ -37,8 +37,6 @@ public partial class Stairs : Node2D
             }
         }
     }
-
-    [Export] public StringName SceneName;
 
     public override void _Ready()
     {

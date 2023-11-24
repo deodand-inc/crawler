@@ -1,11 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://clv76cmkj2d4l"]
+[gd_scene load_steps=5 format=3 uid="uid://clv76cmkj2d4l"]
 
 [ext_resource type="Script" path="res://scripts/nodes/world/Stairs.cs" id="1_nclu1"]
 [ext_resource type="Texture2D" uid="uid://bl6nny8l3vip8" path="res://tiles/Nethack-Tiles16x16.png" id="2_0k187"]
+[ext_resource type="Script" path="res://scripts/engine/zones/ZoneLocation.cs" id="2_xmytq"]
+
+[sub_resource type="Resource" id="Resource_wemee"]
+script = ExtResource("2_xmytq")
+ZoneName = &""
+Identifier = "00000000-0000-0000-0000-000000000000"
 
 [node name="Stairs" type="Node2D"]
 script = ExtResource("1_nclu1")
-SceneName = &""
+Id = "d6aa966c-f336-4b21-8ed6-fea230ffc6be"
+Target = SubResource("Resource_wemee")
 
 [node name="StairsUp" type="Sprite2D" parent="."]
 position = Vector2(8, 8)

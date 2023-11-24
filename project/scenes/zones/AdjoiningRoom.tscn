@@ -1,16 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://brdidpkb2osii"]
+[gd_scene load_steps=2 format=3 uid="uid://ct205yotfpkco"]
 
-[ext_resource type="TileSet" uid="uid://ctm52cg4gfu2e" path="res://resources/nethack_16x16_tileset.tres" id="1_u5lgl"]
-[ext_resource type="PackedScene" uid="uid://clv76cmkj2d4l" path="res://scenes/world/Stairs.tscn" id="2_gmjfv"]
-[ext_resource type="Script" path="res://scripts/engine/zones/ZoneLocation.cs" id="3_gj5ge"]
+[ext_resource type="TileSet" uid="uid://ctm52cg4gfu2e" path="res://resources/nethack_16x16_tileset.tres" id="1_7k1u2"]
 
-[sub_resource type="Resource" id="Resource_vu7wf"]
-script = ExtResource("3_gj5ge")
-ZoneName = &"OtherRoom"
-Identifier = "526d2f27-9b2d-4b87-a1b1-4f304fdc534f"
-
-[node name="TestDungeonRoom" type="TileMap"]
-tile_set = ExtResource("1_u5lgl")
+[node name="AdjoiningRoom" type="TileMap"]
+position = Vector2(432, 0)
+tile_set = ExtResource("1_7k1u2")
 format = 2
 layer_0/name = "foreground"
 layer_0/tile_data = PackedInt32Array(0, 851969, 21, 1, 786433, 21, 2, 786433, 21, 3, 786433, 21, 4, 786433, 21, 5, 786433, 21, 6, 786433, 21, 7, 786433, 21, 8, 786433, 21, 9, 786433, 21, 10, 786433, 21, 11, 786433, 21, 12, 851969, 21, 65548, 720897, 21, 131084, 720897, 21, 196620, 720897, 21, 262156, 720897, 21, 327692, 720897, 21, 393228, 720897, 21, 458764, 720897, 21, 524300, 983041, 21, 524299, 786433, 21, 524298, 786433, 21, 524297, 786433, 21, 524296, 786433, 21, 524295, 786433, 21, 524294, 786433, 21, 524293, 786433, 21, 524292, 786433, 21, 524291, 786433, 21, 524290, 786433, 21, 524289, 786433, 21, 524288, 983041, 21, 458752, 720897, 21, 393216, 720897, 21, 327680, 720897, 21, 262144, 720897, 21, 196608, 720897, 21, 131072, 720897, 21, 65536, 720897, 21)
@@ -24,9 +18,3 @@ layer_1/tile_data = PackedInt32Array(65537, 1900545, 21, 131073, 1900545, 21, 19
 
 [node name="PlayerStart" type="Marker2D" parent="."]
 position = Vector2(128, 80)
-
-[node name="StairsDown" parent="." instance=ExtResource("2_gmjfv")]
-position = Vector2(64, 48)
-Direction = 1
-Id = "f53a4929-1c86-41af-be03-b9c03cfc0db5"
-Target = SubResource("Resource_vu7wf")

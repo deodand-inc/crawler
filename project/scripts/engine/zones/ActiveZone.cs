@@ -1,6 +1,8 @@
-﻿using crawler.scripts.nodes;
+﻿using System;
+using crawler.scripts.nodes;
 using Godot;
-using Godot.Collections;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace crawler.scripts.engine.zones;
 
@@ -9,14 +11,17 @@ public class ActiveZone
     public readonly Zone Source;
     public readonly TileMap Map;
     public readonly Vector2 StartPosition;
-    public readonly Dictionary<Vector2, Node2D> Nodes;
+    public readonly Dictionary<Vector2, Node2D> ByPosition;
+    public readonly Dictionary<Guid, Node2D> ById;
 
-    private ActiveZone(Zone source, TileMap map, Vector2 startPosition, Dictionary<Vector2, Node2D> nodes)
+    private ActiveZone(Zone source, TileMap map, Vector2 startPosition, Dictionary<Vector2, Node2D> byPosition, 
+        Dictionary<Guid, Node2D> byId)
     {
         Source = source;
         Map = map;
         StartPosition = startPosition;
-        Nodes = nodes;
+        ByPosition = byPosition;
+        ById = byId;
     }
 
     public static ActiveZone MakeActive(Zone source)
@@ -29,17 +34,22 @@ public class ActiveZone
             position = startMarker.Position;
         }
 
-        var dict = new Dictionary<Vector2, Node2D>();
+        var byCoordinates = new Dictionary<Vector2, Node2D>();
+        var byId = new Dictionary<Guid, Node2D>();
         foreach (var n in map.GetChildren())
         {
-            if (n is not Node2D)
+            if (n is Node2D asNode2D)
             {
-                continue;
+                byCoordinates.Add(asNode2D.Position, asNode2D);
+                // If it's also an identifiable object, add it to the
+                // identifiable map
+                if (n is IIdentifiable identifiable)
+                {
+                    byId.Add(identifiable.GetId(), asNode2D);
+                }
             }
-            var asNode2D = (Node2D)n;
-            dict.Add(asNode2D.Position, asNode2D);
         }
 
-        return new ActiveZone(source, map, position, dict);
+        return new ActiveZone(source, map, position, byCoordinates, byId);
     }
 }

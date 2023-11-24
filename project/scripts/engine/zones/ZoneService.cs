@@ -74,21 +74,47 @@ public class ZoneService
 
     public void MovePlayerToZone(Zone zone, Vector2 atPosition)
     {
+        TryRemoveCurrentZone();
+        CurrentZone = ActiveZone.MakeActive(zone);
+        Vector2 finalPosition;
+        if (atPosition == Constants.VectorNotSet)
+        {
+            finalPosition = CurrentZone.StartPosition;
+        }
+        else
+        {
+            finalPosition = atPosition;
+        }
+        AddCurrentZoneToTree(finalPosition);
+    }
+
+    public void MovePlayerToZone(ZoneLocation zoneLocation)
+    {
+        TryRemoveCurrentZone();
+        Zone zone = _zones.GetOrThrow(zoneLocation.ZoneName);
+        CurrentZone = ActiveZone.MakeActive(zone);
+        if (!CurrentZone.ById.ContainsKey(zoneLocation.Id))
+        {
+            throw new Exception($"No matching ID for zone location {zoneLocation.ZoneName}->{zoneLocation.Id}");
+        }
+
+        Node2D target = CurrentZone.ById[zoneLocation.Id];
+        AddCurrentZoneToTree(target.Position);
+    }
+
+    private void AddCurrentZoneToTree(Vector2 playerPosition)
+    {
+        Game.Instance.Player.Position = playerPosition;
+        CurrentZone.Map.AddChild(PlayerScene.Instance);
+        GameView.Instance.AddChild(CurrentZone.Map);
+    }
+
+    private void TryRemoveCurrentZone()
+    {
         if (CurrentZone is not null)
         {
             CurrentZone.Map.RemoveChild(PlayerScene.Instance);
             GameView.Instance.RemoveChild(CurrentZone.Map);
         }
-        CurrentZone = ActiveZone.MakeActive(zone);
-        if (atPosition == Constants.VectorNotSet)
-        {
-            Game.Instance.Player.Position = CurrentZone.StartPosition;
-        }
-        else
-        {
-            Game.Instance.Player.Position = atPosition;
-        }
-        CurrentZone.Map.AddChild(PlayerScene.Instance);
-        GameView.Instance.AddChild(CurrentZone.Map);
     }
 }
