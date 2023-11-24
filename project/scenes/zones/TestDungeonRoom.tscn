@@ -1,13 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://brdidpkb2osii"]
+[gd_scene load_steps=7 format=3 uid="uid://brdidpkb2osii"]
 
 [ext_resource type="TileSet" uid="uid://ctm52cg4gfu2e" path="res://resources/nethack_16x16_tileset.tres" id="1_u5lgl"]
 [ext_resource type="PackedScene" uid="uid://clv76cmkj2d4l" path="res://scenes/world/Stairs.tscn" id="2_gmjfv"]
 [ext_resource type="Script" path="res://scripts/engine/zones/ZoneLocation.cs" id="3_gj5ge"]
+[ext_resource type="PackedScene" uid="uid://dx3r0oqt56imm" path="res://scenes/world/Portal.tscn" id="4_hv07a"]
 
-[sub_resource type="Resource" id="Resource_vu7wf"]
+[sub_resource type="Resource" id="Resource_8k4cr"]
 script = ExtResource("3_gj5ge")
 ZoneName = &"OtherRoom"
-Identifier = "526d2f27-9b2d-4b87-a1b1-4f304fdc534f"
+UniqueName = &"StairsUp"
+
+[sub_resource type="Resource" id="Resource_r5jji"]
+script = ExtResource("3_gj5ge")
+ZoneName = &"AdjoiningRoom"
+UniqueName = &"AdjoiningPortal"
 
 [node name="TestDungeonRoom" type="TileMap"]
 tile_set = ExtResource("1_u5lgl")
@@ -26,7 +32,12 @@ layer_1/tile_data = PackedInt32Array(65537, 1900545, 21, 131073, 1900545, 21, 19
 position = Vector2(128, 80)
 
 [node name="StairsDown" parent="." instance=ExtResource("2_gmjfv")]
+unique_name_in_owner = true
 position = Vector2(64, 48)
 Direction = 1
-Id = "f53a4929-1c86-41af-be03-b9c03cfc0db5"
-Target = SubResource("Resource_vu7wf")
+Target = SubResource("Resource_8k4cr")
+
+[node name="AdjoiningPortal" parent="." instance=ExtResource("4_hv07a")]
+unique_name_in_owner = true
+position = Vector2(32, 72)
+Target = SubResource("Resource_r5jji")

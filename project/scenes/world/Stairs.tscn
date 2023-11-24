@@ -1,18 +1,20 @@
-[gd_scene load_steps=5 format=3 uid="uid://clv76cmkj2d4l"]
+[gd_scene load_steps=6 format=3 uid="uid://clv76cmkj2d4l"]
 
 [ext_resource type="Script" path="res://scripts/nodes/world/Stairs.cs" id="1_nclu1"]
 [ext_resource type="Texture2D" uid="uid://bl6nny8l3vip8" path="res://tiles/Nethack-Tiles16x16.png" id="2_0k187"]
-[ext_resource type="Script" path="res://scripts/engine/zones/ZoneLocation.cs" id="2_xmytq"]
+[ext_resource type="Script" path="res://scripts/engine/zones/ZoneLocation.cs" id="2_h536k"]
 
-[sub_resource type="Resource" id="Resource_wemee"]
-script = ExtResource("2_xmytq")
+[sub_resource type="Resource" id="Resource_qyfr4"]
+script = ExtResource("2_h536k")
 ZoneName = &""
-Identifier = "00000000-0000-0000-0000-000000000000"
+UniqueName = &""
 
-[node name="Stairs" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tm0br"]
+size = Vector2(16, 16)
+
+[node name="Stairs" type="Area2D"]
 script = ExtResource("1_nclu1")
-Id = "d6aa966c-f336-4b21-8ed6-fea230ffc6be"
-Target = SubResource("Resource_wemee")
+Target = SubResource("Resource_qyfr4")
 
 [node name="StairsUp" type="Sprite2D" parent="."]
 position = Vector2(8, 8)
@@ -26,3 +28,7 @@ position = Vector2(8, 8)
 texture = ExtResource("2_0k187")
 region_enabled = true
 region_rect = Rect2(544, 336, 16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_tm0br")

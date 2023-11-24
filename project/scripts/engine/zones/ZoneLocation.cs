@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Globalization;
+using crawler.scripts.nodes.utility;
 using Godot;
 
 namespace crawler.scripts.engine.zones;
@@ -16,19 +17,8 @@ public partial class ZoneLocation : Resource
     public StringName ZoneName;
 
     /// <summary>
-    /// Unique ID of the node within the zone.
+    /// Unique name of the node within the zone.
     /// </summary>
-    public Guid Id
-    {
-        get => Guid.Parse(_identifier);
-    }
-
-    private String _identifier;
-
     [Export]
-    public String Identifier
-    {
-        get => _identifier;
-        set => _identifier = value;
-    }
+    public StringName UniqueName;
 }

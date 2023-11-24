@@ -93,12 +93,12 @@ public class ZoneService
         TryRemoveCurrentZone();
         Zone zone = _zones.GetOrThrow(zoneLocation.ZoneName);
         CurrentZone = ActiveZone.MakeActive(zone);
-        if (!CurrentZone.ById.ContainsKey(zoneLocation.Id))
+        Node2D target = CurrentZone.Map.GetNode<Node2D>($"%{zoneLocation.UniqueName}");
+        if (target is null)
         {
-            throw new Exception($"No matching ID for zone location {zoneLocation.ZoneName}->{zoneLocation.Id}");
+            throw new Exception($"No matching ID for zone location {zoneLocation.ZoneName}->%{zoneLocation.UniqueName}");
         }
 
-        Node2D target = CurrentZone.ById[zoneLocation.Id];
         AddCurrentZoneToTree(target.Position);
     }
 

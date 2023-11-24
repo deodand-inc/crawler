@@ -148,6 +148,11 @@ public partial class PlayerScene : Area2D
 			//     // Attack the monster if engaged in combat
 			//     ...
 			// }
+			case Portal:
+			{
+				GD.Print("Here");
+				return;
+			}
 			case TileMap tileMap:
 			{
 				var mapTarget = TileMapUtils.OtherLocalToMapCoordinates(_ray.TargetPosition, _ray, tileMap);

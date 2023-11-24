@@ -12,16 +12,13 @@ public class ActiveZone
     public readonly TileMap Map;
     public readonly Vector2 StartPosition;
     public readonly Dictionary<Vector2, Node2D> ByPosition;
-    public readonly Dictionary<Guid, Node2D> ById;
 
-    private ActiveZone(Zone source, TileMap map, Vector2 startPosition, Dictionary<Vector2, Node2D> byPosition, 
-        Dictionary<Guid, Node2D> byId)
+    private ActiveZone(Zone source, TileMap map, Vector2 startPosition, Dictionary<Vector2, Node2D> byPosition)
     {
         Source = source;
         Map = map;
         StartPosition = startPosition;
         ByPosition = byPosition;
-        ById = byId;
     }
 
     public static ActiveZone MakeActive(Zone source)
@@ -41,15 +38,9 @@ public class ActiveZone
             if (n is Node2D asNode2D)
             {
                 byCoordinates.Add(asNode2D.Position, asNode2D);
-                // If it's also an identifiable object, add it to the
-                // identifiable map
-                if (n is IIdentifiable identifiable)
-                {
-                    byId.Add(identifiable.GetId(), asNode2D);
-                }
             }
         }
 
-        return new ActiveZone(source, map, position, byCoordinates, byId);
+        return new ActiveZone(source, map, position, byCoordinates);
     }
 }

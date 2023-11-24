@@ -4,10 +4,10 @@
 [ext_resource type="PackedScene" uid="uid://clv76cmkj2d4l" path="res://scenes/world/Stairs.tscn" id="2_fjrkm"]
 [ext_resource type="Script" path="res://scripts/engine/zones/ZoneLocation.cs" id="3_47hji"]
 
-[sub_resource type="Resource" id="Resource_bk35x"]
+[sub_resource type="Resource" id="Resource_n7sol"]
 script = ExtResource("3_47hji")
 ZoneName = &"TestDungeonRoom"
-Identifier = "f53a4929-1c86-41af-be03-b9c03cfc0db5"
+UniqueName = &"StairsDown"
 
 [node name="OtherRoom" type="TileMap"]
 tile_set = ExtResource("1_2au3a")
@@ -26,6 +26,6 @@ layer_1/tile_data = PackedInt32Array(393220, 1900545, 21, 458756, 1900545, 21, 4
 position = Vector2(112, 64)
 
 [node name="StairsUp" parent="." instance=ExtResource("2_fjrkm")]
+unique_name_in_owner = true
 position = Vector2(288, 112)
-Id = "526d2f27-9b2d-4b87-a1b1-4f304fdc534f"
-Target = SubResource("Resource_bk35x")
+Target = SubResource("Resource_n7sol")
