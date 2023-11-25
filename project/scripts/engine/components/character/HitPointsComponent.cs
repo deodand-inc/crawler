@@ -5,7 +5,7 @@ using Godot;
 
 namespace crawler.scripts.engine.components.character;
 
-public class HitPoints : AbstractComponent
+public class HitPointsComponent : AbstractComponent
 {
     public int Value
     {
@@ -13,7 +13,7 @@ public class HitPoints : AbstractComponent
         private set;
     }
 
-    public HitPoints(int value)
+    public HitPointsComponent(int value)
     {
         Value = value;
     }
@@ -30,8 +30,8 @@ public class HitPoints : AbstractComponent
             return false;
         }
 
-        Value -= d.amount;
-        GD.Print($"Took {d.amount} damage, health: {Value}");
+        Value -= d.Amount;
+        GD.Print($"Took {d.Amount} damage, health: {Value}");
         return true;
     }
 };

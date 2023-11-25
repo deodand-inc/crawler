@@ -7,12 +7,12 @@ namespace crawler.scripts.engine.events;
 
 public class EventUtils
 {
-    public static void RouteEvent(Event e, ComponentMap _components)
+    public static void RouteEvent(Event e, ComponentMap components)
     {
         Type t = e.GetType();
         while (t is not null && t != typeof(object))
         {
-            foreach (var component in _components.GetComponents(t))
+            foreach (var component in components.GetComponents(t))
             {
                 bool shouldCancel = component.HandleEvent(e);
                 if (shouldCancel)

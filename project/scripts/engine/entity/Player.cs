@@ -6,6 +6,6 @@ public class Player : Entity
 {
     public Player()
     {
-        AddComponent(new HitPoints(5));
+        AddComponent(new HitPointsComponent(5));
     }
 }

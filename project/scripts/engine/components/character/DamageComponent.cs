@@ -25,7 +25,7 @@ public class DamageComponent : AbstractComponent
         {
             return false;
         }
-        ce.collider.HandleEvent(new DamageEvent(Amount));
+        ce.Collider.RouteEvent(new DamageEvent(Amount));
         return true;
     }
 }

@@ -2,10 +2,10 @@
 
 public class DamageEvent : Event
 {
-    public int amount;
+    public int Amount;
 
     public DamageEvent(int amount)
     {
-        this.amount = amount;
+        this.Amount = amount;
     }
 }

@@ -10,12 +10,12 @@ public partial class DataDrivenEntityScene : Area2D
 {
 	private static readonly PackedScene Source = GD.Load<PackedScene>("res://scenes/world/DataDrivenEntityScene.tscn");
 	
-	private DataDrivenEntity _entity;
+	public DataDrivenEntity Entity { get; private set; }
 
 	public static DataDrivenEntityScene Instantiate(DataDrivenEntity entity)
 	{
 		var ret = Source.Instantiate<DataDrivenEntityScene>();
-		ret._entity = entity;
+		ret.Entity = entity;
 		return ret;
 	}
 
@@ -27,16 +27,16 @@ public partial class DataDrivenEntityScene : Area2D
 
 	private void LoadSprite()
 	{ 
-		var sprite = GD.Load<Texture2D>(_entity.Sprite.SpritePath);
+		var sprite = GD.Load<Texture2D>(Entity.Sprite.SpritePath);
 		var spriteNode = GetNode<Sprite2D>("Sprite2D");
 		spriteNode.Texture = sprite;
 		spriteNode.RegionEnabled = true;
-		spriteNode.RegionRect = new Rect2(_entity.Sprite.SpriteCoordinates, Constants.SixteenSquare);
+		spriteNode.RegionRect = new Rect2(Entity.Sprite.SpriteCoordinates, Constants.SixteenSquare);
 	}
 
 	public void RouteEvent(Event e)
 	{
-		_entity.RouteEvent(e);
+		Entity.RouteEvent(e);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

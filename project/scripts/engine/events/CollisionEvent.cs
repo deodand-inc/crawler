@@ -1,16 +1,17 @@
-﻿using crawler.scripts.nodes;
+﻿using crawler.scripts.engine.entity;
+using crawler.scripts.nodes;
 using Godot;
 
 namespace crawler.scripts.engine.events;
 
 public class CollisionEvent : Event
 {
-    public PlayerScene collider;
-    public GodotObject collidedWith;
+    public Entity Collider;
+    public Entity CollidedWith;
 
-    public CollisionEvent(PlayerScene collider, GodotObject collidedWith)
+    public CollisionEvent(Entity collider, Entity collidedWith)
     {
-        this.collider = collider;
-        this.collidedWith = collidedWith;
+        Collider = collider;
+        CollidedWith = collidedWith;
     }
 }
