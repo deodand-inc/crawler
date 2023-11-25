@@ -12,7 +12,7 @@ public class Entity
     public Vector2 Position;
     
     protected ComponentMap Components = new();
-    
+
     public void AddComponent(IComponent component)
     {
         Components.Register(component);

@@ -1,6 +1,7 @@
 ﻿using crawler.scripts.engine.entity;
 using crawler.scripts.engine.zones;
 using crawler.scripts.nodes;
+using crawler.scripts.nodes.world;
 using Godot;
 
 namespace crawler.scripts.engine;
@@ -34,7 +35,8 @@ public class Game
     {
         var entity = EntityService.Instance.LoadEntity("MagicTrap");
         _zoneService.MovePlayerToZone(_zoneService.GetStartingZone());
-        entity.Position = new Vector2(48, 48);
-        _zoneService.CurrentZone.Map.AddChild(entity);
+        var entityScene = DataDrivenEntityScene.Instantiate(entity);
+        entityScene.Position = new Vector2(48, 48);
+        _zoneService.CurrentZone.Map.AddChild(entityScene);
     }
 }

@@ -1,13 +1,16 @@
 [gd_scene load_steps=3 format=3 uid="uid://ceycbqg0aui8l"]
 
-[ext_resource type="Script" path="res://scripts/nodes/world/DataDrivenEntity.cs" id="1_3ul3s"]
+[ext_resource type="Script" path="res://scripts/nodes/world/DataDrivenEntityScene.cs" id="1_3ul3s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_feflr"]
 size = Vector2(16, 16)
 
-[node name="DataDrivenEntity" type="Area2D"]
+[node name="DataDrivenEntityScene" type="Area2D"]
 script = ExtResource("1_3ul3s")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(8, 8)
 shape = SubResource("RectangleShape2D_feflr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(8, 8)

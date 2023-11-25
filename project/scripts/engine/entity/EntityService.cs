@@ -91,7 +91,7 @@ public class EntityService
 
     public DataDrivenEntity Convert(EntityDefinition def)
     {
-        var entity = new Entity();
+        var entity = new DataDrivenEntity(def.SpriteCoordinates, def.SpritePath);
         
         foreach (var c in def.Components)
         {
@@ -110,6 +110,6 @@ public class EntityService
             entity.AddComponent(component);
         }
 
-        return new DataDrivenEntity(entity);
+        return entity;
     }
 }

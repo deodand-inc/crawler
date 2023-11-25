@@ -1,4 +1,7 @@
 name: MagicTrap
+spriteCoordinates:
+  x: 64
+  y: 368
 components:
   DamageComponent:
     damage: 2

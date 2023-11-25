@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bl6nny8l3vip8" path="res://tiles/Nethack-Tiles16x16.png" id="2_0k187"]
 [ext_resource type="Script" path="res://scripts/engine/zones/ZoneLocation.cs" id="2_h536k"]
 
-[sub_resource type="Resource" id="Resource_3jdvc"]
+[sub_resource type="Resource" id="Resource_g5xw5"]
 script = ExtResource("2_h536k")
 ZoneName = &""
 UniqueName = &""
@@ -14,7 +14,7 @@ size = Vector2(16, 16)
 
 [node name="Stairs" type="Area2D"]
 script = ExtResource("1_nclu1")
-Target = SubResource("Resource_3jdvc")
+Target = SubResource("Resource_g5xw5")
 IsWarp = false
 
 [node name="StairsUp" type="Sprite2D" parent="."]
