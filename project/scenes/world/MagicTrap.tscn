@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://c2lj7nufblw4l"]
+
+[ext_resource type="Texture2D" uid="uid://bl6nny8l3vip8" path="res://tiles/Nethack-Tiles16x16.png" id="1_hr8v8"]
+[ext_resource type="Script" path="res://scripts/nodes/world/MagicTrap.cs" id="1_wkmor"]
+
+[node name="MagicTrap" type="Node2D"]
+script = ExtResource("1_wkmor")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(8, 8)
+texture = ExtResource("1_hr8v8")
+region_enabled = true
+region_rect = Rect2(64, 368, 16, 16)

@@ -6,9 +6,14 @@ namespace crawler.scripts.engine.components;
 
 public abstract class AbstractComponent : IComponent
 {
-    public AbstractComponent()
+    protected AbstractComponent()
     {
         OnComponentMount();
+    }
+
+    protected AbstractComponent(Dictionary<string, object> properties)
+    {
+        // Guarantees that all components will have this ctor.
     }
     
     public void OnComponentMount()
@@ -20,14 +25,8 @@ public abstract class AbstractComponent : IComponent
     {
         EventRouter.Instance.Deregister(this);
     }
-    
-    public IList<Type> GetHandledTypes()
-    {
-        throw new NotImplementedException();
-    }
 
-    public bool HandleEvent(Event e)
-    {
-        throw new NotImplementedException();
-    }
+    public abstract IList<Type> GetHandledTypes();
+
+    public abstract bool HandleEvent(Event e);
 }

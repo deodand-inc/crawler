@@ -22,46 +22,25 @@ public class EventRouter
         }
     }
 
-    private Dictionary<Type, ISet<IComponent>> _componentRegistry;
+    private ComponentMap _componentRegistry;
 
     private EventRouter()
     {
-        _componentRegistry = new Dictionary<Type, ISet<IComponent>>();
+        _componentRegistry = new();
     }
 
     public void Register(IComponent component)
     {
-        foreach (var type in component.GetHandledTypes())
-        {
-            _componentRegistry.GetOrCompute(type, (_, _) => new HashSet<IComponent>()).Add(component);
-        }
+        _componentRegistry.Register(component);
     }
 
     public void Deregister(IComponent component)
     {
-        foreach (var type in component.GetHandledTypes())
-        {
-            _componentRegistry.GetOrCompute(type, (_, _) => new HashSet<IComponent>()).Remove(component);
-        }
+        _componentRegistry.Deregister(component);
     }
 
     public void RouteEvent(Event e)
     {
-        Type t = e.GetType();
-        while (t is not null && t != typeof(object))
-        {
-            foreach (var component in _componentRegistry.GetOrCompute(t, (_, _) => new HashSet<IComponent>()))
-            {
-                bool shouldCancel = component.HandleEvent(e);
-                if (shouldCancel)
-                {
-                    return;
-                }
-            }
-
-            // Proceed up through the type hierarchy as there could be handlers for our
-            // base class
-            t = t?.BaseType;
-        }
+        EventUtils.RouteEvent(e, _componentRegistry);
     }
 }

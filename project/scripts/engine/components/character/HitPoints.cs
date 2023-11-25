@@ -17,12 +17,12 @@ public class HitPoints : AbstractComponent
         Value = value;
     }
 
-    public new IList<Type> GetHandledTypes()
+    public override IList<Type> GetHandledTypes()
     {
         return new List<Type> { typeof(DamageEvent) };
     }
 
-    public new bool HandleEvent(Event e)
+    public override bool HandleEvent(Event e)
     {
         if (e is not DamageEvent d)
         {

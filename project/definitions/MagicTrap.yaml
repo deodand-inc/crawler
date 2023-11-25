@@ -1,0 +1,4 @@
+name: MagicTrap
+components:
+  DamageComponent:
+    damage: 2

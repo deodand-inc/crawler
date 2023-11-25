@@ -9,15 +9,6 @@ public class Game
 {
     private static Game _instance = null;
 
-    public Player Player;
-    private ZoneService _zoneService;
-
-    private Game()
-    {
-        Player = new Player();
-        _zoneService = ZoneService.Instance;
-    }
-
     public static Game Instance
     {
         get
@@ -30,8 +21,20 @@ public class Game
         }
     }
 
+    public Player Player;
+    private ZoneService _zoneService;
+
+    private Game()
+    {
+        Player = new Player();
+        _zoneService = ZoneService.Instance;
+    }
+
     public void StartGame()
     {
+        var entity = EntityService.Instance.LoadEntity("MagicTrap");
         _zoneService.MovePlayerToZone(_zoneService.GetStartingZone());
+        entity.Position = new Vector2(48, 48);
+        _zoneService.CurrentZone.Map.AddChild(entity);
     }
 }

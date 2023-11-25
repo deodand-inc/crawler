@@ -4,6 +4,8 @@ namespace crawler.scripts.engine.entity;
 
 public class Player : Entity
 {
-    private HitPoints HitPoints = new HitPoints(5);
-
+    public Player()
+    {
+        AddComponent(new HitPoints(5));
+    }
 }

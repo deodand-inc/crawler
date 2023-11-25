@@ -16,10 +16,10 @@ public static class CrawlerExtensions
             // if no func given, throw.
             if (func == null) throw new ArgumentNullException(nameof(func));
             // if no mapping, return null.
-            if (!dict.TryGetValue(key, out var value)) return default;
+            if (dict.TryGetValue(key, out var value)) return value;
             // get the new value from func.
-            var result = func(key, value);
-            if (result == null)
+            var computed = func(key, value);
+            if (computed == null)
             {
                 // if the mapping exists but func => null,
                 // remove the mapping and return null.
@@ -28,8 +28,8 @@ public static class CrawlerExtensions
             }
             // mapping exists and func returned a non-null value.
             // set and return the new value
-            dict[key] = result;
-            return result;
+            dict[key] = computed;
+            return computed;
         }
     }
     
