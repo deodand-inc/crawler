@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using crawler.scripts.engine.events;
+using Godot;
 
 namespace crawler.scripts.engine.components.character;
 
@@ -30,6 +31,7 @@ public class HitPoints : AbstractComponent
         }
 
         Value -= d.amount;
+        GD.Print($"Took {d.amount} damage, health: {Value}");
         return true;
     }
 };

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using crawler.scripts.engine.events;
+using Godot;
 
 namespace crawler.scripts.engine.components.character;
 
@@ -20,6 +21,11 @@ public class DamageComponent : AbstractComponent
 
     public override bool HandleEvent(Event e)
     {
-        throw new NotImplementedException();
+        if (e is not CollisionEvent ce)
+        {
+            return false;
+        }
+        ce.collider.HandleEvent(new DamageEvent(Amount));
+        return true;
     }
 }

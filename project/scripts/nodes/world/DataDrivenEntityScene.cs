@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using crawler.scripts.engine.entity;
+using crawler.scripts.engine.events;
 using crawler.scripts.utils;
 
 namespace crawler.scripts.nodes.world;
@@ -31,6 +32,11 @@ public partial class DataDrivenEntityScene : Area2D
 		spriteNode.Texture = sprite;
 		spriteNode.RegionEnabled = true;
 		spriteNode.RegionRect = new Rect2(_entity.Sprite.SpriteCoordinates, Constants.SixteenSquare);
+	}
+
+	public void RouteEvent(Event e)
+	{
+		_entity.RouteEvent(e);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

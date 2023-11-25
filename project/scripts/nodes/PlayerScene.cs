@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using crawler.scripts.engine;
 using crawler.scripts.engine.entity;
+using crawler.scripts.engine.events;
 using crawler.scripts.engine.zones;
 using crawler.scripts.nodes.world;
 
@@ -167,8 +168,19 @@ public partial class PlayerScene : Area2D
 				// Bumped into a wall
 				return false;
 			}
+			case DataDrivenEntityScene d:
+			{
+				d.RouteEvent(new CollisionEvent(this, d));
+				// TODO: need to determine whether player can actually move here.
+				return true;
+			}
 		}
 
 		return true;
+	}
+	
+	public void HandleEvent(Event e)
+	{
+		_player.RouteEvent(e);
 	}
 }
