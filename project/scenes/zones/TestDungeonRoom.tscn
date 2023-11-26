@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://scripts/engine/zones/ZoneLocation.cs" id="3_gj5ge"]
 [ext_resource type="PackedScene" uid="uid://dx3r0oqt56imm" path="res://scenes/world/Portal.tscn" id="4_hv07a"]
 
-[sub_resource type="Resource" id="Resource_8k4cr"]
+[sub_resource type="Resource" id="Resource_6t2mq"]
 script = ExtResource("3_gj5ge")
 ZoneName = &"OtherRoom"
 UniqueName = &"StairsUp"
@@ -13,7 +13,7 @@ UniqueName = &"StairsUp"
 [sub_resource type="Resource" id="Resource_r5jji"]
 script = ExtResource("3_gj5ge")
 ZoneName = &"AdjoiningRoom"
-UniqueName = &"AdjoiningPortalSpawn"
+UniqueName = &"EastPortalSpawn"
 
 [node name="TestDungeonRoom" type="TileMap"]
 tile_set = ExtResource("1_u5lgl")
@@ -35,12 +35,12 @@ position = Vector2(128, 80)
 unique_name_in_owner = true
 position = Vector2(64, 48)
 Direction = 1
-Target = SubResource("Resource_8k4cr")
+Target = SubResource("Resource_6t2mq")
 
-[node name="AdjoiningPortal" parent="." instance=ExtResource("4_hv07a")]
+[node name="WestPortal" parent="." instance=ExtResource("4_hv07a")]
 position = Vector2(-16, 80)
 Target = SubResource("Resource_r5jji")
 
-[node name="AdjoiningPortalSpawn" type="Marker2D" parent="."]
+[node name="WestPortalSpawn" type="Marker2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(0, 80)

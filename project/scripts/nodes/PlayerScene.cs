@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using crawler.scripts.engine;
 using crawler.scripts.engine.entity;
+using crawler.scripts.engine.events;
 using crawler.scripts.engine.zones;
 using crawler.scripts.nodes.world;
 
@@ -22,7 +23,6 @@ public partial class PlayerScene : Area2D
 	private bool _debug = false;
 	private Rect2 _debugRect;
 	private TileMap _parent;
-	private Player _player;
 	
 	public override void _Draw()
 	{
@@ -42,8 +42,7 @@ public partial class PlayerScene : Area2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		_player = Game.Instance.Player;
-		Position = _player.Position;
+		Position = Game.Instance.Player.Position;
 		// Get a reference to our raycast node.
 		_ray = GetNode<RayCast2D>("RayCast2D");
 	}
@@ -109,8 +108,13 @@ public partial class PlayerScene : Area2D
 
 	private void _TryMove(Vector2 direction)
 	{
-		_debugRect = new Rect2();
-		QueueRedraw();
+		if (_debug)
+		{
+			// Reset the rectangle marking the collided-with object
+			// to a size-0 rectangle (i.e. nothing is drawn)
+			_debugRect = new Rect2();
+			QueueRedraw();
+		}
 		// We want to target the centre of the tile that `direction` indicates
 		// Multiply the direction by the tile size to scale it for the space
 		var target = (Position + direction * Constants.TileSize)
@@ -166,6 +170,12 @@ public partial class PlayerScene : Area2D
 			{
 				// Bumped into a wall
 				return false;
+			}
+			case DataDrivenEntityScene d:
+			{
+				d.RouteEvent(new CollisionEvent(Game.Instance.Player, d.Entity));
+				// TODO: need to determine whether player can actually move here.
+				return true;
 			}
 		}
 

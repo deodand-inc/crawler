@@ -18,7 +18,7 @@ public class ZoneService
 
     private ZoneService()
     {
-        const String path = "res://scenes/zones";
+        const string path = "res://scenes/zones";
         using var dir = DirAccess.Open(path);
         if (dir != null)
         {
