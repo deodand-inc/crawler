@@ -7,8 +7,8 @@
 
 [sub_resource type="Resource" id="Resource_6t2mq"]
 script = ExtResource("3_gj5ge")
-ZoneName = &""
-UniqueName = &""
+ZoneName = &"OtherRoom"
+UniqueName = &"StairsUp"
 
 [sub_resource type="Resource" id="Resource_r5jji"]
 script = ExtResource("3_gj5ge")
